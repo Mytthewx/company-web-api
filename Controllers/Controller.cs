@@ -49,9 +49,7 @@ namespace WebAPI.Controllers
 				return BadRequest();
 			}
 
-			var result = _companyService.SearchCompany(searchFilter);
-
-			return Ok(result);
+			return Ok(_companyService.SearchCompany(searchFilter));
 		}
 		
 		[HttpPut]
@@ -76,8 +74,8 @@ namespace WebAPI.Controllers
 		[Route("company/delete/{id}")]
 		public async Task<ActionResult> DeleteCompany(int id)
 		{
-			await _companyService.DeleteCompany(id);
-			return Ok();
+			var result = await _companyService.DeleteCompany(id);
+			return Ok(result);
 		}
 	}
 }

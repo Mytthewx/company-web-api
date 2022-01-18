@@ -68,12 +68,12 @@ namespace WebAPI.Services
 			return true;
 		}
 
-		public async Task<bool> DeleteCompany(int id)
+		public async Task<Company> DeleteCompany(int id)
 		{
 			var company = await _dbContext.Companies.Include(x => x.Employees).FirstOrDefaultAsync(x => x.Id == id);
 			if (company == null)
 			{
-				return false;
+				return null;
 			}
 
 			if (company.Employees.Any())
@@ -83,7 +83,7 @@ namespace WebAPI.Services
 
 			_dbContext.Companies.Remove(company);
 			await _dbContext.SaveChangesAsync();
-			return true;
+			return company;
 		}
 	}
 }

@@ -38,6 +38,28 @@ namespace WebAPI
 			services.AddSwaggerGen(config =>
 			{
 				config.SwaggerDoc("v1", new OpenApiInfo { Title = "CompanyWebAPI", Version = "v1" });
+				config.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+				{
+					Name = "Authorization",
+					Type = SecuritySchemeType.Http,
+					Scheme = "basic",
+					In = ParameterLocation.Header,
+					Description = "Basic Authorization header using the Bearer scheme."
+				});
+				config.AddSecurityRequirement(new OpenApiSecurityRequirement
+				{
+					{
+						  new OpenApiSecurityScheme
+							{
+								Reference = new OpenApiReference
+								{
+									Type = ReferenceType.SecurityScheme,
+									Id = "basic"
+								}
+							},
+							new string[] {}
+					}
+				});
 			});
 
 			services.AddScoped<IUserService, UserService>();
@@ -54,7 +76,6 @@ namespace WebAPI
 			{
 				app.UseExceptionHandler("/Error");
 			}
-
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>
 			{

@@ -31,24 +31,12 @@ namespace WebAPI
 				return AuthenticateResult.Fail("Authorization header was not found.");
 			}
 
-			string username;
-			bool result;
+			var username = await Authenticate();
 
-			try
-			{
-				var credentials = GetCredentials();
-				username = credentials[0];
-				var password = credentials[1];
-				result = await _userService.Authenticate(username, password);
-			}
-			catch
+			if (username == null)
 			{
 				return AuthenticateResult.Fail("Invalid Username or Password");
-			}
 
-			if (!result)
-			{
-				return AuthenticateResult.Fail("Invalid Username or Password");
 			}
 
 			var claims = new[] {
@@ -61,11 +49,22 @@ namespace WebAPI
 			return AuthenticateResult.Success(ticket);
 		}
 
-		private string[] GetCredentials()
+		private async Task<string> Authenticate()
 		{
-			var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-			var bytes = Convert.FromBase64String(authenticationHeaderValue.Parameter);
-			return Encoding.UTF8.GetString(bytes).Split(":");
+			try
+			{
+				var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+				var bytes = Convert.FromBase64String(authenticationHeaderValue.Parameter);
+				var credentials = Encoding.UTF8.GetString(bytes).Split(":");
+				var username = credentials[0];
+				var password = credentials[1];
+				var result = await _userService.Authenticate(username, password);
+				return username;
+			}
+			catch
+			{
+				return null;
+			}
 		}
 	}
 }
