@@ -18,6 +18,14 @@ management via RESTful Web API. The entire application was created by Mateusz Do
 ## Authentication
 
 As intended by the project, a method of Basic Authentication was used in the application. The user data are hardcoded in the **UserService.cs** class.
+Additionally, swagger settings have been added to enable an authentication feature where you can enter a login and password. The method used to search for companies does not require authorization. The password and username are encoded in Base64.
+
+Default name and password:
+|  Username          |  Password |
+|----------------|----------------|
+|PumoxUser		|	PumoxPassword|
+
+![Swagger authorization](https://i.imgur.com/Vvv9zNq.png)
 
 ## Settings/Database connection string
 
