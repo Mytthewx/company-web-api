@@ -1,4 +1,4 @@
-﻿# Company Web API!
+# Company Web API!
 
 Application written in C# (.NET Core) storing in a selected database information about companies including a list of employees and with the possibility of
 management via RESTful Web API. The entire application was created by Mateusz Domagała as part of a recruiting project.
@@ -15,7 +15,7 @@ management via RESTful Web API. The entire application was created by Mateusz Do
 
 ![Endpoint on the swagger](https://i.imgur.com/b1XUfKO.png)
 
-## Authenticationm
+## Authentication
 
 As intended by the project, a method of Basic Authentication was used in the application. The user data are hardcoded in the **UserService.cs** class.
 
