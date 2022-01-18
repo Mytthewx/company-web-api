@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "WebAPI": {
+      "commandName": "Project"
+    }
+  }
+}
