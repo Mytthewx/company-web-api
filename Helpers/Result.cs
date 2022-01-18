@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using WebAPI.ResponseModel;
 
-/* Ta klasa stworzona jest po to, żeby wyświetlać napis "Results" w odowiedzi na swaggerze.
- * Nie byłem do końca pewny czy to jest zabieg specjalny, ale w dokumencie pdf jaki od Państwa otrzymałem,
- * w końcówce nr 2 'POST: /company/search' jest w odpowiedzi słowo "Results:" przechowujące listę wyników.
- * Ta klasa mogłaby być zbędna, ale czytając ze zrozumieniem według mnie konieczne było jej dodanie. */
+/* This class is created to display the word "Results" in the swagger response.
+/ I wasn't quite sure enough if this was a special treatment, but in the pdf document I received from you,
+/ in endpoint #2 'POST: /company/search' there is the word 'Results:' in the response storing a list of results.
+/ This class could be redundant, but reading with understanding in my opinion it was necessary to add it. */
 
 namespace WebAPI
 {

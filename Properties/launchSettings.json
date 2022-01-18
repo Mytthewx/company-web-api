@@ -1,7 +1,7 @@
 {
-  "profiles": {
-    "WebAPI": {
-      "commandName": "Project"
+    "profiles": {
+        "WebAPI": {
+            "commandName": "Project"
+        }
     }
-  }
 }

@@ -41,17 +41,15 @@ namespace WebAPI.Services
 
 			foreach (var model in models)
 			{
-				var response = new CompanySearchResultResponse
+				responseList.Add(new CompanySearchResultResponse
 				{
 					Name = model.Name,
 					EstablishmentYear = model.EstablishmentYear,
 					Employees = model.Employees
-				};
-				responseList.Add(response);
+				});
 			}
 
-			var result = new Result { Results = responseList };
-			return result;
+			return new Result { Results = responseList };
 		}
 
 		public async Task<bool> UpdateCompany(int id, CompanyDto company)
@@ -80,8 +78,7 @@ namespace WebAPI.Services
 
 			if (company.Employees.Any())
 			{
-				var employeesToDelete = company.Employees;
-				_dbContext.Employees.RemoveRange(employeesToDelete);
+				_dbContext.Employees.RemoveRange(company.Employees);
 			}
 
 			_dbContext.Companies.Remove(company);

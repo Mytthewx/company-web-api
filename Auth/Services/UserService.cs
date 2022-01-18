@@ -9,11 +9,7 @@ namespace WebAPI
 
 		public Task<bool> Authenticate(string username, string password)
 		{
-			if (username == USERNAME && password == PASSWORD)
-			{
-				return Task.FromResult(true);
-			}
-			return Task.FromResult(false);
+			return Task.FromResult(username == USERNAME && password == PASSWORD);
 		}
 	}
 }

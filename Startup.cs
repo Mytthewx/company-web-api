@@ -35,9 +35,9 @@ namespace WebAPI
 			services.AddTransient<ICompanyService, CompanyService>();
 			services.AddDbContext<DatabaseContext>(options =>
 						options.UseSqlServer(Configuration.GetConnectionString("ApiDatabase")));
-			services.AddSwaggerGen(c =>
+			services.AddSwaggerGen(config =>
 			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "CompanyWebAPI", Version = "v1" });
+				config.SwaggerDoc("v1", new OpenApiInfo { Title = "CompanyWebAPI", Version = "v1" });
 			});
 
 			services.AddScoped<IUserService, UserService>();

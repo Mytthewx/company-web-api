@@ -14,11 +14,11 @@ namespace WebAPI
 	{
 		private readonly IUserService _userService;
 
-		public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, 
-			ILoggerFactory logger, 
-			UrlEncoder encoder, 
+		public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options,
+			ILoggerFactory logger,
+			UrlEncoder encoder,
 			ISystemClock clock,
-			IUserService userService) 
+			IUserService userService)
 			: base(options, logger, encoder, clock)
 		{
 			_userService = userService;
@@ -36,11 +36,9 @@ namespace WebAPI
 
 			try
 			{
-				var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
-				var bytes = Convert.FromBase64String(authenticationHeaderValue.Parameter);
-				var credentials = Encoding.UTF8.GetString(bytes).Split(":");
+				var credentials = GetCredentials();
 				username = credentials[0];
-				string password = credentials[1];
+				var password = credentials[1];
 				result = await _userService.Authenticate(username, password);
 			}
 			catch
@@ -48,6 +46,10 @@ namespace WebAPI
 				return AuthenticateResult.Fail("Invalid Username or Password");
 			}
 
+			if (!result)
+			{
+				return AuthenticateResult.Fail("Invalid Username or Password");
+			}
 
 			var claims = new[] {
 				new Claim(ClaimTypes.Name, username)
@@ -56,12 +58,14 @@ namespace WebAPI
 			var principal = new ClaimsPrincipal(identity);
 			var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-			if (result)
-			{
-				return AuthenticateResult.Success(ticket);
-			}
+			return AuthenticateResult.Success(ticket);
+		}
 
-			return AuthenticateResult.Fail("Invalid Username or Password");
+		private string[] GetCredentials()
+		{
+			var authenticationHeaderValue = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);
+			var bytes = Convert.FromBase64String(authenticationHeaderValue.Parameter);
+			return Encoding.UTF8.GetString(bytes).Split(":");
 		}
 	}
 }
