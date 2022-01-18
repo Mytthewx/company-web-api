@@ -43,6 +43,7 @@ namespace WebAPI.Services
 			{
 				responseList.Add(new CompanySearchResultResponse
 				{
+					Id = model.Id,
 					Name = model.Name,
 					EstablishmentYear = model.EstablishmentYear,
 					Employees = model.Employees
